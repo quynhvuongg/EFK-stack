@@ -28,8 +28,8 @@ services:
     command:
       - "--config.file=/etc/alertmanager/alertmanager.yml"
     network_mode: "host"
-  logging:
-    driver: "fluentd"
-    options:
-      fluentd-address: 171.236.38.168:24224
-      tag: alertmanager
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: 171.236.38.168:24224
+        tag: alertmanager
