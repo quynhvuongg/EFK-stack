@@ -1,0 +1,35 @@
+version: '3'
+services:
+  fluentd:
+    container_name: fluentd
+    build: ./fluentd
+    volumes:
+        - ./fluentd/conf:/fluentd/etc
+    network_mode: "host"
+
+  elasticsearch:
+    container_name: elasticsearch
+    image: elasticsearch:7.17.1
+    network_mode: "host"
+    environment:
+      - "discovery.type=single-node"
+
+  kibana:
+    container_name: kibana
+    image: kibana:7.17.1
+    environment:
+      ELASTICSEARCH_HOSTS: http://171.236.38.168:9200
+    network_mode: "host"
+    
+  alertmanager:
+    image: prom/alertmanager
+    volumes:
+      - ./alertmanager.yml:/etc/alertmanager/alertmanager.yml
+    command:
+      - "--config.file=/etc/alertmanager/alertmanager.yml"
+    network_mode: "host"
+  logging:
+    driver: "fluentd"
+    options:
+      fluentd-address: 171.236.38.168:24224
+      tag: alertmanager
