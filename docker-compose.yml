@@ -24,9 +24,9 @@ services:
   alertmanager:
     image: prom/alertmanager
     volumes:
-      - ./alertmanager.yml:/etc/alertmanager/alertmanager.yml
+      - ./alertmanager/:/etc/alertmanager/
     command:
-      - "--config.file=/etc/alertmanager/alertmanager.yml"
+      - "--config.file=/etc/alertmanager/config.yml"
     network_mode: "host"
     logging:
       driver: "fluentd"
